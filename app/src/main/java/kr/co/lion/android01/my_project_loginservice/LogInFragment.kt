@@ -20,6 +20,7 @@ class LogInFragment : Fragment() {
         fragmentLogInBinding = FragmentLogInBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         setToolBar()
+        setEvent()
 
         return fragmentLogInBinding.root
     }
@@ -104,9 +105,10 @@ class LogInFragment : Fragment() {
                 }
                 return
             }
+            enum.hideSoftInput(mainActivity)
         }
         inputData()
-        mainActivity
+        mainActivity.removeFragment(FragmentName.LOGIN_FRAGMENT)
 
     }
 }

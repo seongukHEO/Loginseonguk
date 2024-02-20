@@ -1,59 +1,135 @@
 package kr.co.lion.android01.my_project_loginservice
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kr.co.lion.android01.my_project_loginservice.databinding.FragmentInputBinding
+import kr.co.lion.android01.newmemoproject_seonguk.enum
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [InputFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class InputFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    lateinit var fragmentInputBinding: FragmentInputBinding
+    lateinit var mainActivity: MainActivity
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        fragmentInputBinding = FragmentInputBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
+        setToolBar()
+        setEvent()
+        return fragmentInputBinding.root
+    }
+    //툴바 설정
+    fun setToolBar(){
+        fragmentInputBinding.apply {
+            materialToolbar4.apply {
+                title = "나의 정보 입력하기"
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_input, container, false)
+    //이벤트 설정
+    fun setEvent(){
+        fragmentInputBinding.apply {
+            infoInputButton.setOnClickListener {
+                checkOK()
+            }
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment InputFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            InputFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    //정보 입력
+    fun inputData(){
+        fragmentInputBinding.apply {
+            var height = heightText.text.toString().toInt()
+            var weight = weightText.text.toString().toInt()
+            var age = ageText.text.toString().toInt()
+            var bmi = bmiText.text.toString().toInt()
+            var bone = boneText.text.toString().toInt()
+
+        }
+    }
+
+    //유효성 검사
+    fun checkOK(){
+        fragmentInputBinding.apply {
+            var height = heightText.text.toString()
+            if (height.trim().isEmpty()){
+                enum.showDiaLog(mainActivity, "키 입력 오류", "키를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(heightText, mainActivity)
                 }
+                return
             }
+
+            var weight = weightText.text.toString()
+            if (weight.trim().isEmpty()){
+                enum.showDiaLog(mainActivity, "몸무게 입력 오류", "몸무게를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(weightText, mainActivity)
+                }
+                return
+            }
+
+            var age = ageText.text.toString()
+            if (age.trim().isEmpty()){
+                enum.showDiaLog(mainActivity, "나이 입력 오류", "나이를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(ageText, mainActivity)
+                }
+                return
+            }
+
+            var bmi = bmiText.text.toString()
+            if (bmi.trim().isEmpty()){
+                enum.showDiaLog(mainActivity, "BMI 입력 오류", "BMI를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(bmiText, mainActivity)
+                }
+                return
+            }
+
+            var bone = boneText.text.toString()
+            if (bone.trim().isEmpty()){
+                enum.showDiaLog(mainActivity, "골격근량 입력 오류", "골격근량을 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(boneText, mainActivity)
+                }
+                return
+            }
+        }
+        inputData()
+        mainActivity.removeFragment(FragmentName.INPUT_FRAGMENT)
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

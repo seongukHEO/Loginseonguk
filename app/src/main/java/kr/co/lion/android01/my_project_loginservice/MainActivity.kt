@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.android01.my_project_loginservice.databinding.ActivityMainBinding
 
@@ -128,6 +129,13 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.commit()
         }
     }
+    fun removeFragment(name:FragmentName){
+        SystemClock.sleep(200)
+
+        // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
+        supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
 }
 
 enum class FragmentName(var str:String){

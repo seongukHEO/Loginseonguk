@@ -5,55 +5,148 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.divider.MaterialDividerItemDecoration
+import kr.co.lion.android01.my_project_loginservice.databinding.FragmentShowBinding
+import kr.co.lion.android01.my_project_loginservice.databinding.ShowRecyclerBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ShowFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ShowFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    lateinit var fragmentShowBinding: FragmentShowBinding
+    lateinit var mainActivity: MainActivity
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        fragmentShowBinding = FragmentShowBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
+        initView()
+        setToolBar()
+        setEvent()
+        return fragmentShowBinding.root
+    }
+
+    //툴바 설정
+    fun setToolBar(){
+        fragmentShowBinding.apply {
+            materialToolbar3.apply {
+                title = "나의 정보"
+                setNavigationIcon(R.drawable.finmyloggo_gh)
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_show, container, false)
+    //이벤트 설정
+    fun setEvent(){
+        fragmentShowBinding.apply {
+            infoButton.setOnClickListener {
+                mainActivity.replaceFragment(FragmentName.INPUT_FRAGMENT, true ,true , null)
+            }
+            mymenuButton.setOnClickListener {
+                mainActivity.replaceFragment(FragmentName.SHOW_MEMO_FRAGMENT, true , true , null)
+            }
+
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ShowFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ShowFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    fun initView(){
+        fragmentShowBinding.apply {
+            recyclerview.apply {
+                adapter = RecyclerViewAdapter()
+                layoutManager = LinearLayoutManager(mainActivity)
+                var deco = MaterialDividerItemDecoration(mainActivity, MaterialDividerItemDecoration.VERTICAL)
+                addItemDecoration(deco)
             }
+        }
     }
+
+    //리사이클러뷰
+    inner class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderClass>(){
+
+        //viewHolderClass
+        inner class ViewHolderClass(showRecyclerBinding: ShowRecyclerBinding):RecyclerView.ViewHolder(showRecyclerBinding.root){
+            var showRecyclerBinding:ShowRecyclerBinding
+
+            init {
+                this.showRecyclerBinding = showRecyclerBinding
+                //가로 세로 길이 맞추기
+                this.showRecyclerBinding.root.layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
+            var showRecyclerBinding = ShowRecyclerBinding.inflate(layoutInflater)
+            var viewHolder = ViewHolderClass(showRecyclerBinding)
+            return viewHolder
+        }
+
+        override fun getItemCount(): Int {
+            return 20
+        }
+
+        override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
+            holder.showRecyclerBinding.textrecyclerHeight.text = "키 : 170cm"
+            holder.showRecyclerBinding.textrecyclerWeight.text = "몸무게 : 80kg"
+            holder.showRecyclerBinding.textrecyclerAge.text = "나이 : 24살"
+            holder.showRecyclerBinding.textrecyclerBMI.text = "BMI : 20"
+            holder.showRecyclerBinding.textrecyclerBone.text = "골격근량 : 39kg"
+            //클릭했을 떄
+            holder.showRecyclerBinding.root.setOnClickListener {
+                mainActivity.replaceFragment(FragmentName.MODIFY_FRAGMENT, true, true, null)
+            }
+        }
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
