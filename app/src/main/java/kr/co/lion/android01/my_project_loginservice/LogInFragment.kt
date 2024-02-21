@@ -52,11 +52,15 @@ class LogInFragment : Fragment() {
     //입력을 받는다
     fun inputData(){
         fragmentLogInBinding.apply {
-            var name = nameLoginText.text.toString()
-            var number = numberLoginText.text.toString().toInt()
-            var id = idLoginText.text.toString()
-            var pw = pwLoginText.text.toString()
+            var userName = nameLoginText.text.toString()
+            var userNumber = numberLoginText.text.toString().toInt()
+            var userId = idLoginText.text.toString()
+            var userPw = pwLoginText.text.toString()
             var checkPW = checkPWLoginText.text.toString()
+
+            var loginList = LoginClass(1, userId, userPw, userName, userNumber)
+            LoginDAO.insertLogin(mainActivity, loginList)
+
         }
 
     }
