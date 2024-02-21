@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true"
-    tools:context=".RecordMemoFragment">
+    tools:context=".MemoModifyFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar7"
+        android:id="@+id/materialToolbar10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FAFAFA"
@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -38,7 +39,7 @@
                     android:hint="날짜">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/noDateText"
+                        android:id="@+id/noDatemodifyText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -51,13 +52,13 @@
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/timeRecordText"
+                        android:id="@+id/timeRecordmodifyText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number" />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/textmodifyView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -66,7 +67,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/textmodifyView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -75,41 +76,40 @@
 
                 <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:checkedButton="@id/radioButton6">
+                    android:layout_height="match_parent">
 
                     <RadioButton
-                        android:id="@+id/radioButton"
+                        android:id="@+id/radiomodifyButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="가슴" />
 
                     <RadioButton
-                        android:id="@+id/radioButton2"
+                        android:id="@+id/radiomodifyButton2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="등" />
 
                     <RadioButton
-                        android:id="@+id/radioButton3"
+                        android:id="@+id/radiomodifyButton3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="어깨" />
 
                     <RadioButton
-                        android:id="@+id/radioButton4"
+                        android:id="@+id/radiomodifyButton4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="하체" />
 
                     <RadioButton
-                        android:id="@+id/radioButton5"
+                        android:id="@+id/radiomodifyButton5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="팔" />
 
                     <RadioButton
-                        android:id="@+id/radioButton6"
+                        android:id="@+id/radiomodifyButton6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="기타" />
@@ -123,21 +123,22 @@
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/exerciseMemoText"
+                        android:id="@+id/exerciseMemomodifyText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text|textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/memoRecordButton"
+                    android:id="@+id/memoRecordmodifyButton"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="메모 저장" />
+                    android:text="메모 수정" />
 
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

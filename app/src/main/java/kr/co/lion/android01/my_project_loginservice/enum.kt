@@ -18,6 +18,7 @@ class enum {
             diaLogBuilder.setTitle(title)
             diaLogBuilder.setMessage(message)
             diaLogBuilder.setPositiveButton("확인", listener)
+            diaLogBuilder.setNegativeButton("취소", null)
             diaLogBuilder.show()
 
         }

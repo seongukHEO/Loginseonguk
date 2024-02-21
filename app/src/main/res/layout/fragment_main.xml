@@ -86,23 +86,13 @@
                 android:layout_weight="1"
                 android:text="비밀번호 찾기" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="420dp">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lattie"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginTop="50dp"
             app:lottie_autoPlay="true"
-            tools:ignore="MissingConstraints" />
+            app:lottie_rawRes="@raw/lotie_gh" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

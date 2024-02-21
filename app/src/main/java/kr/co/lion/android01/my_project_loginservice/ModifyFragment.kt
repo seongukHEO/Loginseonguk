@@ -38,10 +38,14 @@ class ModifyFragment : Fragment() {
     fun setEvent(){
         fragmentModifyBinding.apply {
             modifyButton.setOnClickListener {
-                checkOK()
+                enum.showDiaLog(mainActivity, "정보 수정", "정말 수정하시겠습니까?"){ dialogInterface: DialogInterface, i: Int ->
+                    checkOK()
+                }
             }
             deleteButton.setOnClickListener {
-                mainActivity.removeFragment(FragmentName.MODIFY_FRAGMENT)
+                enum.showDiaLog(mainActivity, "정보 삭제", "정말 삭제하시겠습니까?"){ dialogInterface: DialogInterface, i: Int ->
+                    mainActivity.removeFragment(FragmentName.MODIFY_FRAGMENT)
+                }
             }
         }
 

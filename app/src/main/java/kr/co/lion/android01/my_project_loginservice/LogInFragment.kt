@@ -30,6 +30,12 @@ class LogInFragment : Fragment() {
         fragmentLogInBinding.apply {
             materialToolbar2.apply {
                 title = "회원 가입"
+                //아이콘
+                setNavigationIcon(R.drawable.arrow_back_24px)
+                //클릭
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(FragmentName.LOGIN_FRAGMENT)
+                }
             }
         }
     }

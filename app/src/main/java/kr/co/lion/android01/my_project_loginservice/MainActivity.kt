@@ -68,6 +68,12 @@ class MainActivity : AppCompatActivity() {
             FragmentName.SEARCH_PW_FRAGMENT -> {
                 newFragment = SearchPwFragment()
             }
+            FragmentName.BOTTOM_SHOW_FRAGMENT -> {
+                newFragment = BottomShowFragment()
+            }
+            FragmentName.MEMO_MODIFY_FRAGMENT -> {
+                newFragment = MemoModifyFragment()
+            }
 
         }
 
@@ -136,6 +142,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
+
 }
 
 enum class FragmentName(var str:String){
@@ -147,5 +154,56 @@ enum class FragmentName(var str:String){
     SHOW_MEMO_FRAGMENT("ShowMemoFragment"),
     RECORD_MEMO_FRAGMENT("RecordMemoFragment"),
     SEARCH_ID_FRAGMENT("SearchIdFragment"),
-    SEARCH_PW_FRAGMENT("SearchPwFragment")
+    SEARCH_PW_FRAGMENT("SearchPwFragment"),
+    BOTTOM_SHOW_FRAGMENT("BottomShowFragment"),
+    MEMO_MODIFY_FRAGMENT("MemoModifyFragment")
 }
+
+
+enum class ExerciseBody(var num:Int, var str:String){
+    CHEST(0, "가슴"),
+    BACK(1, "등"),
+    SHOULDER(2, "어깨"),
+    ARMS(3, "팔"),
+    LEGS(4, "하체"),
+    EXTRA(5, "기타")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

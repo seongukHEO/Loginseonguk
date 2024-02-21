@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="나의 메뉴"
+                android:text="나의 메모"
                 app:icon="@drawable/haha_123"
                 app:iconGravity="textStart" />
 

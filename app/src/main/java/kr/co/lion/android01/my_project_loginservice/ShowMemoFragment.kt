@@ -103,6 +103,15 @@ class ShowMemoFragment : Fragment() {
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
             holder.rowBinding.textShowDate.text = "2월 21일"
             holder.rowBinding.textShowExercise.text = "가슴"
+            //클릭했을 때
+            holder.rowBinding.root.setOnClickListener {
+                var bottomShowFragment = BottomShowFragment()
+
+                //position 번째 추출
+
+                //보여주기
+                bottomShowFragment.show(mainActivity.supportFragmentManager, "BottomSheet")
+            }
         }
     }
 }
