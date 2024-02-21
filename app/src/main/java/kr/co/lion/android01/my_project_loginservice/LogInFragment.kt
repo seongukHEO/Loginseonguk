@@ -61,6 +61,7 @@ class LogInFragment : Fragment() {
             var loginList = LoginClass(1, userId, userPw, userName, userNumber)
             LoginDAO.insertLogin(mainActivity, loginList)
 
+
         }
 
     }

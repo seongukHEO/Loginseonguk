@@ -6,7 +6,7 @@ class LoginDAO {
 
     companion object {
         //selectOne
-        fun selectLoginOne(context: Context, userId:String) : LoginClass{
+        fun selectLoginOne(context: Context, userId: String) : LoginClass{
             //쿼리 생성
             var sql = """select idx, userId, userPw, userName, userNumber
             |from LoginTable
@@ -15,6 +15,44 @@ class LoginDAO {
 
             //?에 들어갈 값
             var args = arrayOf(userId)
+
+            //쿼리 실핼
+            var dbHelper = DBHelper(context)
+            var cursor = dbHelper.writableDatabase.rawQuery(sql, args)
+
+            //접근
+            cursor.moveToNext()
+
+            //순서값을 가져온다
+            var idx1 = cursor.getColumnIndex("idx")
+            var idx2 = cursor.getColumnIndex("userId")
+            var idx3 = cursor.getColumnIndex("userPw")
+            var idx4 = cursor.getColumnIndex("userName")
+            var idx5 = cursor.getColumnIndex("userNumber")
+
+            //데이터를 가져온다
+            var idx = cursor.getInt(idx1)
+            var userId = cursor.getString(idx2)
+            var userPw = cursor.getString(idx3)
+            var userName = cursor.getString(idx4)
+            var userNumber = cursor.getInt(idx5)
+
+            //객체에 데이터를 담는다
+            var loginInfo = LoginClass(idx, userId, userPw, userName, userNumber)
+            //데이터 베이스를 닫아준다
+            dbHelper.close()
+            return loginInfo
+        }
+
+        fun selectLoginOne1(context: Context, userNumber: Int) : LoginClass{
+            //쿼리 생성
+            var sql = """select idx, userId, userPw, userName, userNumber
+            |from LoginTable
+            |where userNumber = ?
+        """.trimMargin()
+
+            //?에 들어갈 값
+            var args = arrayOf(userNumber.toString())
 
             //쿼리 실핼
             var dbHelper = DBHelper(context)
@@ -121,7 +159,7 @@ class LoginDAO {
 
 
         //delete
-        fun delete(context: Context, userId: String){
+        fun delete(context: Context, userId: String, userNumber:Int){
             //쿼리 생성
             var sql = """delete from LoginTable
             |where userId = ?
