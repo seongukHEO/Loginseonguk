@@ -18,7 +18,7 @@ class SearchIdFragment : Fragment() {
         fragmentSearchIdBinding = FragmentSearchIdBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         setToolBar()
-        setEvent()
+        buttonSet()
         return fragmentSearchIdBinding.root
     }
 
@@ -35,29 +35,36 @@ class SearchIdFragment : Fragment() {
             }
         }
     }
-
-    //이벤트 설정
-    fun setEvent(){
+    fun buttonSet(){
         fragmentSearchIdBinding.apply {
             button2.setOnClickListener {
                 var number1 = phonenumberText.text.toString()
-                var number = phonenumberText.text.toString().toInt()
-                var searchId = LoginDAO.selectLoginOne1(mainActivity, number)
                 if (number1.trim().isEmpty()){
                     enum.showDiaLog(mainActivity, "휴대폰 번호 입력 오류", "휴대폰 번호를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
                         enum.showSoftInput(phonenumberText, mainActivity)
                     }
                     return@setOnClickListener
                 }
-                else if (number != searchId.userNumber){
+                setEvent()
+            }
+        }
+    }
+
+    //이벤트 설정
+    fun setEvent(){
+        fragmentSearchIdBinding.apply {
+            button2.setOnClickListener {
+
+                var number = phonenumberText.text.toString().toInt()
+                var searchId = LoginDAO.selectLoginOne1(mainActivity, number)
+                if (number != searchId?.userNumber){
                     enum.showDiaLog(mainActivity, "저장된 정보 없음", "휴대폰 번호로 저장된 정보가 없습니다"){ dialogInterface: DialogInterface, i: Int ->
                         enum.showSoftInput(phonenumberText, mainActivity)
                     }
                     return@setOnClickListener
-                }else{
-                    textView7.apply {
-                        text = "아이디 : ${searchId.userId}"
-                    }
+                }
+                textView7.apply {
+                    text = "아이디 : ${searchId?.userId}"
                 }
             }
 

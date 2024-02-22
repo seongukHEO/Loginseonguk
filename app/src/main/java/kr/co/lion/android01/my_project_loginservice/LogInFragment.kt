@@ -85,8 +85,14 @@ class LogInFragment : Fragment() {
             }
 
             var id = idLoginText.text.toString()
+            var useridInfo = LoginDAO.selectLoginOne(mainActivity, id)
             if (id.trim().isEmpty()){
                 enum.showDiaLog(mainActivity, "아이디 입력 오류", "아이디를 입력 해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(idLoginText, mainActivity)
+                }
+                return
+            }else if(id == useridInfo?.userId){
+                enum.showDiaLog(mainActivity, "아이디 중복 오류", "이미 존재하는 아이디 입니다. 다른 아이디를 입력해주세요!"){ dialogInterface: DialogInterface, i: Int ->
                     enum.showSoftInput(idLoginText, mainActivity)
                 }
                 return

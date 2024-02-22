@@ -90,20 +90,23 @@ class MainFragment : Fragment() {
 
             var id = mainTextId.text.toString()
             var loginId = LoginDAO.selectLoginOne(mainActivity, id)
-            if (id != loginId.userId){
-                enum.showDiaLog(mainActivity, "아이디 오류", "아이디를 확인해주세요"){ dialogInterface: DialogInterface, i: Int ->
+
+            var pw = mainTextPW.text.toString()
+
+            if (id != loginId?.userId) {
+                enum.showDiaLog(mainActivity, "아이디 오류", "아이디를 확인해주세요") { dialogInterface: DialogInterface, i: Int ->
                     enum.showSoftInput(mainTextId, mainActivity)
                 }
                 return
             }
 
-            var pw = mainTextPW.text.toString()
-            if (pw != loginId.userPw){
-                enum.showDiaLog(mainActivity, "비밀번호 오류", "비밀번호를 확인해주세요"){ dialogInterface: DialogInterface, i: Int ->
+            if (pw != loginId.userPw) {
+                enum.showDiaLog(mainActivity, "비밀번호 오류", "비밀번호를 확인해주세요") { dialogInterface: DialogInterface, i: Int ->
                     enum.showSoftInput(mainTextPW, mainActivity)
                 }
                 return
             }
+
             var bundle = Bundle()
             bundle.putString("loginId", loginId.userId)
             mainActivity.replaceFragment(FragmentName.SHOW_FRAGMENT, true, true, bundle)
