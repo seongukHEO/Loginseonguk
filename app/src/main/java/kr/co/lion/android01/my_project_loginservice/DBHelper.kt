@@ -16,6 +16,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "Login.db", null, 1
         db?.execSQL(sql)
 
         //나머지도 여기다 만들어보자 아니 나눌 필요가 있어?
+        var sql2 = """create table InfoTable
+            |(idx integer primary key autoincrement,
+            |userId text not null,
+            |height integer not null,
+            |weight integer not null,
+            |age integer not null,
+            |bmi integer not null,
+            |bone integer not null)
+        """.trimMargin()
+        db?.execSQL(sql2)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

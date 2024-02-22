@@ -177,13 +177,13 @@ class LoginDAO {
 
 
         //delete
-        fun delete(context: Context, userId: String, userNumber:Int){
+        fun delete(context: Context, idx:Int){
             //쿼리 생성
             var sql = """delete from LoginTable
-            |where userId = ?
+            |where idx = ?
         """.trimMargin()
             //?에 들어갈 값
-            var args = arrayOf(userId)
+            var args = arrayOf(idx.toString())
             //쿼리 실행
             var dbHelper = DBHelper(context)
             dbHelper.writableDatabase.execSQL(sql, args)

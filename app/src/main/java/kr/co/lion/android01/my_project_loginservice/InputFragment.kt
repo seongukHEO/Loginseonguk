@@ -2,6 +2,7 @@ package kr.co.lion.android01.my_project_loginservice
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,11 +43,15 @@ class InputFragment : Fragment() {
     //정보 입력
     fun inputData(){
         fragmentInputBinding.apply {
+            var userid = inputIdText.text.toString()
             var height = heightText.text.toString().toInt()
             var weight = weightText.text.toString().toInt()
             var age = ageText.text.toString().toInt()
             var bmi = bmiText.text.toString().toInt()
             var bone = boneText.text.toString().toInt()
+
+            var infoList = UserInfo(1, userid, height, age, weight, bmi, bone)
+            InfoDAO.insertInfo(mainActivity, infoList)
 
         }
     }
@@ -54,6 +59,25 @@ class InputFragment : Fragment() {
     //유효성 검사
     fun checkOK(){
         fragmentInputBinding.apply {
+            var userid = inputIdText.text.toString()
+            var infoId = InfoDAO.getUserWithAdditionalInfo(mainActivity, userid)
+            if (userid.trim().isEmpty()){
+                enum.showDiaLog(mainActivity, "아이디 입력 오류", "아이디를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(inputIdText, mainActivity)
+                    Log.e("test1234", "${infoId?.userId}")
+                }
+                return
+            }
+            else if(userid != infoId?.userId){
+                enum.showDiaLog(mainActivity, "아이디 입력 오류", "아이디를 확인해주세요"){ dialogInterface: DialogInterface, i: Int ->
+                    enum.showSoftInput(inputIdText, mainActivity)
+                }
+                return
+            }
+
+
+
+
             var height = heightText.text.toString()
             if (height.trim().isEmpty()){
                 enum.showDiaLog(mainActivity, "키 입력 오류", "키를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->

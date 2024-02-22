@@ -10,7 +10,7 @@ data class LoginClass(
 
 data class UserInfo(
     var idx:Int,
-    var login_idx:Int,
+    var userId: String,
     var height:Int,
     var age:Int,
     var weight:Int,

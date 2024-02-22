@@ -1,6 +1,7 @@
 package kr.co.lion.android01.my_project_loginservice
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,10 @@ class ShowFragment : Fragment() {
     lateinit var fragmentShowBinding: FragmentShowBinding
     lateinit var mainActivity: MainActivity
 
+    //정보 객체를 담을 리스트
+    lateinit var infoList:MutableList<UserWithAdditionalInfo>
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -24,7 +29,16 @@ class ShowFragment : Fragment() {
         initView()
         setToolBar()
         setEvent()
+        saveData()
+
         return fragmentShowBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fragmentShowBinding.apply {
+            recyclerview.adapter?.notifyDataSetChanged()
+        }
     }
 
     //툴바 설정
@@ -35,6 +49,13 @@ class ShowFragment : Fragment() {
                 setNavigationIcon(R.drawable.finmyloggo_gh)
             }
         }
+    }
+    fun saveData(){
+        var userId00 = arguments?.getString("loginId")
+        if (userId00 != null){
+            infoList = InfoDAO.getUserWithAdditionalInfo12(mainActivity, userId00)
+        }
+
     }
 
     //이벤트 설정
@@ -85,15 +106,17 @@ class ShowFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 20
+            return infoList.size
         }
 
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-            holder.showRecyclerBinding.textrecyclerHeight.text = "키 : 170cm"
-            holder.showRecyclerBinding.textrecyclerWeight.text = "몸무게 : 80kg"
-            holder.showRecyclerBinding.textrecyclerAge.text = "나이 : 24살"
-            holder.showRecyclerBinding.textrecyclerBMI.text = "BMI : 20"
-            holder.showRecyclerBinding.textrecyclerBone.text = "골격근량 : 39kg"
+            var info = infoList[position]
+            Log.e("test1234", "${info.userId}")
+            holder.showRecyclerBinding.textrecyclerHeight.text = "키 : ${info.height}cm"
+            holder.showRecyclerBinding.textrecyclerWeight.text = "몸무게 : ${info.weight}kg"
+            holder.showRecyclerBinding.textrecyclerAge.text = "나이 : ${info.age}살"
+            holder.showRecyclerBinding.textrecyclerBMI.text = "BMI : ${info.bmi}"
+            holder.showRecyclerBinding.textrecyclerBone.text = "골격근량 : ${info.bone}kg"
             //클릭했을 떄
             holder.showRecyclerBinding.root.setOnClickListener {
                 mainActivity.replaceFragment(FragmentName.MODIFY_FRAGMENT, true, true, null)
