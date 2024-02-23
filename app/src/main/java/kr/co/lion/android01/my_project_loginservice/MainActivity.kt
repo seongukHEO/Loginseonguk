@@ -169,6 +169,16 @@ enum class ExerciseBody(var num:Int, var str:String){
     EXTRA(5, "기타")
 }
 
+enum class ShowFilter(var num:Int, var str:String){
+    FILTER_ALL(0, "전체"),
+    FILTER_CHEST(1, "가슴"),
+    FILTER_BACK(2, "등"),
+    FILTER_SHOULDER(3, "어깨"),
+    FILTER_ARMS(4, "팔"),
+    FILTER_LEGS(5, "하체"),
+    FILTER_EXTRA(6, "기타")
+}
+
 
 
 

@@ -1,6 +1,7 @@
 package kr.co.lion.android01.my_project_loginservice
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,9 @@ class ShowMemoFragment : Fragment() {
 
     lateinit var fragmentShowMemoBinding: FragmentShowMemoBinding
     lateinit var mainActivity: MainActivity
+
+    //UserMemoInfoClass의 값을 받을 객체
+    lateinit var memoList:MutableList<UserMemoInfoClass>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -23,7 +27,15 @@ class ShowMemoFragment : Fragment() {
         initView()
         setToolBar()
         floatButton()
+        saveData()
         return fragmentShowMemoBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fragmentShowMemoBinding.apply {
+            recyclerview2.adapter?.notifyDataSetChanged()
+        }
     }
     //툴바 설정
     fun setToolBar(){
@@ -52,6 +64,16 @@ class ShowMemoFragment : Fragment() {
                 }
             }
         }
+    }
+    fun saveData(){
+        var str = arguments?.getString("userId")
+        //Log.e("test123", "${str}")
+        if (str != null){
+            memoList = MemoDAO.joinLoginMemo12(mainActivity, str)
+        }
+
+
+
     }
 
     //floatingAction 버튼
@@ -97,12 +119,32 @@ class ShowMemoFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 20
+            return memoList.size
+
         }
 
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-            holder.rowBinding.textShowDate.text = "2월 21일"
-            holder.rowBinding.textShowExercise.text = "가슴"
+            holder.rowBinding.textShowDate.text = "운동 시간 : ${memoList[position].exerciseTime}"
+            when(memoList[position].exerciseBody){
+                ExerciseBody.CHEST.num -> {
+                    holder.rowBinding.textShowExercise.text = "운동 부위 : ${ExerciseBody.CHEST.str}"
+                }
+                ExerciseBody.BACK.num -> {
+                    holder.rowBinding.textShowExercise.text = "운동 부위 : ${ExerciseBody.BACK.str}"
+                }
+                ExerciseBody.SHOULDER.num -> {
+                    holder.rowBinding.textShowExercise.text = "운동 부위 : ${ExerciseBody.SHOULDER.str}"
+                }
+                ExerciseBody.ARMS.num -> {
+                    holder.rowBinding.textShowExercise.text = "운동 부위 : ${ExerciseBody.ARMS.str}"
+                }
+                ExerciseBody.LEGS.num -> {
+                    holder.rowBinding.textShowExercise.text = "운동 부위 : ${ExerciseBody.LEGS.str}"
+                }
+                ExerciseBody.EXTRA.num -> {
+                    holder.rowBinding.textShowExercise.text = "운동 부위 : ${ExerciseBody.EXTRA.str}"
+                }
+            }
             //클릭했을 때
             holder.rowBinding.root.setOnClickListener {
                 var bottomShowFragment = BottomShowFragment()

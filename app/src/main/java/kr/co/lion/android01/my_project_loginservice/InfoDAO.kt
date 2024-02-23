@@ -132,13 +132,13 @@ class InfoDAO {
 
 
         //delete
-        fun delete(context: Context, idx:Int){
+        fun delete(context: Context, userId:String){
             var sql = """delete from InfoTable
-                |where idx = ?
+                |where userId = ?
             """.trimMargin()
 
             //?에 들어갈 값
-            var args = arrayOf(idx.toString())
+            var args = arrayOf(userId)
 
             //쿼리 실행
             var dbHelper = DBHelper(context)
@@ -239,6 +239,7 @@ class InfoDAO {
 
                 userWithAdditionalInfo = UserWithAdditionalInfo(userId, userPw, userNumber, userName, height, weight, age, bmi, bone)
                 list.add(userWithAdditionalInfo)
+
             }
 
             cursor.close()

@@ -2,6 +2,7 @@ package kr.co.lion.android01.my_project_loginservice
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,11 @@ class ModifyFragment : Fragment() {
             }
             deleteButton.setOnClickListener {
                 enum.showDiaLog(mainActivity, "정보 삭제", "정말 삭제하시겠습니까?"){ dialogInterface: DialogInterface, i: Int ->
-                    mainActivity.removeFragment(FragmentName.MODIFY_FRAGMENT)
+                    var info = arguments?.getString("userId")
+                    if (info != null){
+                        InfoDAO.delete(mainActivity, info)
+                        mainActivity.removeFragment(FragmentName.MODIFY_FRAGMENT)
+                    }
                 }
             }
         }
@@ -54,21 +59,35 @@ class ModifyFragment : Fragment() {
     //뷰 설정
     fun setView(){
         fragmentModifyBinding.apply {
-            heightmodifyText.setText("170")
-            weightmodifyText.setText("70")
-            agemodifyText.setText("24")
-            bmimodifyText.setText("20")
-            bonemodifyText.setText("39")
+            var info = arguments?.getString("userId")
+            if (info != null){
+                var userInfo = InfoDAO.getUserWithAdditionalInfo(mainActivity, info)
+
+                textModifyId.setText("${userInfo?.userId}")
+                heightmodifyText.setText("${userInfo?.height}")
+                weightmodifyText.setText("${userInfo?.weight}")
+                agemodifyText.setText("${userInfo?.age}")
+                bmimodifyText.setText("${userInfo?.bmi}")
+                bonemodifyText.setText("${userInfo?.bone}")
+            }
         }
     }
     //입력받는다
     fun inputData(){
         fragmentModifyBinding.apply {
+            var info = arguments?.getString("userId")
+            var userInfo = InfoDAO.getUserWithAdditionalInfo(mainActivity, info!!)
+
+            var userId = textModifyId.text.toString()
             var height = heightmodifyText.text.toString().toInt()
             var wight = weightmodifyText.text.toString().toInt()
             var age = agemodifyText.text.toString().toInt()
             var bmi = bmimodifyText.text.toString().toInt()
             var bone = bonemodifyText.text.toString().toInt()
+
+            InfoDAO.delete(mainActivity, userInfo?.userId!!)
+            var infoList = UserInfo(1, userId, height, age, wight, bmi, bone)
+            InfoDAO.insertInfo(mainActivity, infoList)
         }
     }
 

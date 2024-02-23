@@ -20,8 +20,8 @@ data class UserInfo(
 
 data class MemoClass(
     var idx:Int,
-    var login_idx2: Int,
-    var dateTime:Int,
+    var userId: String,
+    var dateTime:String,
     var exerciseTime:Int,
     var exerciseBody:Int,
     var other:String

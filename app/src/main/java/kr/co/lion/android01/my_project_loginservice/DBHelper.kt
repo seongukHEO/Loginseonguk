@@ -26,6 +26,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "Login.db", null, 1
             |bone integer not null)
         """.trimMargin()
         db?.execSQL(sql2)
+
+        var sql3 = """create table MemoTable
+            |(idx integer primary key autoincrement,
+            |userId text not null,
+            |dateTime text not null,
+            |exerciseTime integer not null,
+            |exerciseBody integer not null,
+            |other text not null)
+        """.trimMargin()
+        db?.execSQL(sql3)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

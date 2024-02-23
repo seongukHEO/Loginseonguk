@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.android01.my_project_loginservice.databinding.FragmentShowBinding
 import kr.co.lion.android01.my_project_loginservice.databinding.ShowRecyclerBinding
+import kr.co.lion.android01.newmemoproject_seonguk.enum
 
 class ShowFragment : Fragment() {
 
@@ -38,6 +39,7 @@ class ShowFragment : Fragment() {
         super.onResume()
         fragmentShowBinding.apply {
             recyclerview.adapter?.notifyDataSetChanged()
+            enum.hideSoftInput(mainActivity)
         }
     }
 
@@ -65,7 +67,14 @@ class ShowFragment : Fragment() {
                 mainActivity.replaceFragment(FragmentName.INPUT_FRAGMENT, true ,true , null)
             }
             mymenuButton.setOnClickListener {
-                mainActivity.replaceFragment(FragmentName.SHOW_MEMO_FRAGMENT, true , true , null)
+                var userId00 = arguments?.getString("loginId")
+                if (userId00 != null){
+                    var str = InfoDAO.getUserWithAdditionalInfo(mainActivity, userId00)
+                    var bundle = Bundle()
+                    bundle.putString("userId", str?.userId)
+                    mainActivity.replaceFragment(FragmentName.SHOW_MEMO_FRAGMENT, true , true , bundle)
+                }
+
             }
 
         }
@@ -119,7 +128,9 @@ class ShowFragment : Fragment() {
             holder.showRecyclerBinding.textrecyclerBone.text = "골격근량 : ${info.bone}kg"
             //클릭했을 떄
             holder.showRecyclerBinding.root.setOnClickListener {
-                mainActivity.replaceFragment(FragmentName.MODIFY_FRAGMENT, true, true, null)
+                var bundle = Bundle()
+                bundle.putString("userId", infoList[position].userId)
+                mainActivity.replaceFragment(FragmentName.MODIFY_FRAGMENT, true, true, bundle)
             }
         }
     }
