@@ -8,6 +8,12 @@
     tools:context=".BottomShowFragment">
 
     <TextView
+        android:id="@+id/bottomUserId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
         android:id="@+id/bottomDateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

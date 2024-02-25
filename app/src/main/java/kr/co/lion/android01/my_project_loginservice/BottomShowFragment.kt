@@ -27,10 +27,24 @@ class BottomShowFragment : BottomSheetDialogFragment() {
     //내용을 보여준다
     fun showData(){
         fragmentBottomShowBinding.apply {
-            bottomDateText.text = "2월 21일"
-            bottomTImeText.text = "30분"
-            bottomBodyText.text = "가슴"
-            bottomExtraText.text = "후 힘들어따"
+            var userId = arguments?.getString("userId")
+            if (userId != null){
+                var str = MemoDAO.selectOneMemo(mainActivity, userId)
+
+                bottomUserId.text = "아이디 : ${str?.userId}"
+                bottomDateText.text = "날짜 : ${str?.dateTime}"
+                bottomTImeText.text = "운동 시간 : ${str?.exerciseTime}분"
+                bottomBodyText.text = when(str?.exerciseBody){
+                    0 -> ExerciseBody.CHEST.str
+                    1 -> ExerciseBody.BACK.str
+                    2 -> ExerciseBody.SHOULDER.str
+                    3 -> ExerciseBody.ARMS.str
+                    4 -> ExerciseBody.LEGS.str
+                    5 -> ExerciseBody.EXTRA.str
+                    else -> ExerciseBody.EXTRA.str
+                }
+                bottomExtraText.text = "운동 메모 : ${str?.other}"
+            }
 
         }
     }
@@ -38,13 +52,25 @@ class BottomShowFragment : BottomSheetDialogFragment() {
     fun setEvent(){
         fragmentBottomShowBinding.apply {
             bottomModifyButton.setOnClickListener {
-                mainActivity.replaceFragment(FragmentName.MEMO_MODIFY_FRAGMENT, true, true, null)
+                var userId = arguments?.getString("userId")
+                var bundle = Bundle()
+                bundle.putString("userId", userId)
+
+
+                mainActivity.replaceFragment(FragmentName.MEMO_MODIFY_FRAGMENT, true, true, bundle)
                 dismiss()
 
             }
             bottomDeleteButton.setOnClickListener {
                 enum.showDiaLog(mainActivity, "메모 삭제", "정말 삭제하시겠습니까?"){ dialogInterface: DialogInterface, i: Int ->
-                    dismiss()
+                    var userId = arguments?.getString("userId")
+                    if (userId != null){
+                        MemoDAO.deleteMemo(mainActivity, userId)
+                        //Recyclerview갱신
+                        mainActivity.reloadRecyclerView()
+                        dismiss()
+
+                    }
                 }
             }
             bottomCancelButton.setOnClickListener {

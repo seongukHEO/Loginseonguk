@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.android01.my_project_loginservice.databinding.FragmentShowMemoBinding
 import kr.co.lion.android01.my_project_loginservice.databinding.RowBinding
+import kr.co.lion.android01.newmemoproject_seonguk.enum
 
 class ShowMemoFragment : Fragment() {
 
@@ -18,7 +19,8 @@ class ShowMemoFragment : Fragment() {
     lateinit var mainActivity: MainActivity
 
     //UserMemoInfoClass의 값을 받을 객체
-    lateinit var memoList:MutableList<UserMemoInfoClass>
+    //lateinit var memoList:MutableList<UserMemoInfoClass>
+    lateinit var memoList:MutableList<MemoClass>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -35,6 +37,7 @@ class ShowMemoFragment : Fragment() {
         super.onResume()
         fragmentShowMemoBinding.apply {
             recyclerview2.adapter?.notifyDataSetChanged()
+            enum.hideSoftInput(mainActivity)
         }
     }
     //툴바 설정
@@ -67,10 +70,7 @@ class ShowMemoFragment : Fragment() {
     }
     fun saveData(){
         var str = arguments?.getString("userId")
-        //Log.e("test123", "${str}")
-        if (str != null){
-            memoList = MemoDAO.joinLoginMemo12(mainActivity, str)
-        }
+        memoList = MemoDAO.selectAllMemo(mainActivity)
 
 
 
@@ -124,7 +124,7 @@ class ShowMemoFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-            holder.rowBinding.textShowDate.text = "운동 시간 : ${memoList[position].exerciseTime}"
+            holder.rowBinding.textShowDate.text = "운동 시간 : ${memoList[position].exerciseTime}분"
             when(memoList[position].exerciseBody){
                 ExerciseBody.CHEST.num -> {
                     holder.rowBinding.textShowExercise.text = "운동 부위 : ${ExerciseBody.CHEST.str}"
@@ -150,11 +150,20 @@ class ShowMemoFragment : Fragment() {
                 var bottomShowFragment = BottomShowFragment()
 
                 //position 번째 추출
+                var bundle = Bundle()
+                bundle.putString("userId", memoList[position].userId)
+                bottomShowFragment.arguments = bundle
 
                 //보여주기
                 bottomShowFragment.show(mainActivity.supportFragmentManager, "BottomSheet")
             }
         }
+    }
+    fun reloadRecyclerView(){
+        //데이터를 읽어온다
+        memoList = MemoDAO.selectAllMemo(mainActivity)
+        //RecyclerView를 갱신한다
+        fragmentShowMemoBinding.recyclerview2.adapter?.notifyDataSetChanged()
     }
 }
 

@@ -67,7 +67,7 @@ class RecordMemoFragment : Fragment() {
             }
             var other = exerciseMemoText.text.toString()
 
-            var exercise = MemoClass(2, userId, dateTime, exerciseTime, exerciseBody.toString().toInt(), other )
+            var exercise = MemoClass(1, userId, dateTime, exerciseTime, exerciseBody.toString().toInt(), other )
             MemoDAO.insertMemo(mainActivity, exercise)
 
         }
@@ -78,23 +78,13 @@ class RecordMemoFragment : Fragment() {
     fun checkOK(){
         fragmentRecordMemoBinding.apply {
             var userId = noIdText.text.toString()
-            var userInfoId = MemoDAO.joinLoginMemo(mainActivity, userId)
             if (userId.trim().isEmpty()){
                 enum.showDiaLog(mainActivity, "아이디 입력 오류", "아이디를 입력해주세요"){ dialogInterface: DialogInterface, i: Int ->
                     enum.showSoftInput(noIdText, mainActivity)
                 }
                 return
             }
-            else if(userId != userInfoId?.userId) {
-                enum.showDiaLog(
-                    mainActivity,
-                    "아이디 입력 오류",
-                    "아이디를 확인해주세요"
-                ) { dialogInterface: DialogInterface, i: Int ->
-                    enum.showSoftInput(noIdText, mainActivity)
-                }
-                return
-            }
+
 
             var exerciseTime = timeRecordText.text.toString()
             if (exerciseTime.trim().isEmpty()){

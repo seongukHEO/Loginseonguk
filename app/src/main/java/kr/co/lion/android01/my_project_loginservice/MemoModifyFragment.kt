@@ -47,9 +47,25 @@ class MemoModifyFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun printData(){
         fragmentMemoModifyBinding.apply {
-            var date = LocalDate.now().toString()
-            timeRecordmodifyText.setText("30")
-            exerciseMemomodifyText.setText("후 힘들어따")
+            var userId = arguments?.getString("userId")
+
+            if (userId != null){
+                var str = MemoDAO.selectOneMemo(mainActivity, userId)
+                idModifyText.setText("${str?.userId}")
+                noDatemodifyText.setText("${str?.dateTime}")
+                timeRecordmodifyText.setText("${str?.exerciseTime}")
+                when(str?.exerciseBody){
+                    0 -> radioGroup2.check(R.id.radiomodifyButton)
+                    1 -> radioGroup2.check(R.id.radiomodifyButton2)
+                    2 -> radioGroup2.check(R.id.radiomodifyButton3)
+                    3 -> radioGroup2.check(R.id.radiomodifyButton4)
+                    4 -> radioGroup2.check(R.id.radiomodifyButton5)
+                    5 -> radioGroup2.check(R.id.radiomodifyButton6)
+                }
+                exerciseMemomodifyText.setText("${str?.other}")
+            }
+
+
 
         }
 
@@ -68,7 +84,30 @@ class MemoModifyFragment : Fragment() {
 
     //정보 수집
     fun getData(){
-        //데베 만들고 나서
+        fragmentMemoModifyBinding.apply {
+            var userId = idModifyText.text.toString()
+            var dateTime = noDatemodifyText.text.toString()
+            var exerciseTime = timeRecordmodifyText.text.toString().toInt()
+            var exerciseBody = when(radioGroup2.checkedRadioButtonId){
+                R.id.radiomodifyButton -> ExerciseBody.CHEST.num
+                R.id.radiomodifyButton2 -> ExerciseBody.BACK.num
+                R.id.radiomodifyButton3 -> ExerciseBody.SHOULDER.num
+                R.id.radiomodifyButton4 -> ExerciseBody.LEGS.num
+                R.id.radiomodifyButton5 -> ExerciseBody.ARMS.num
+                R.id.radiomodifyButton6 -> ExerciseBody.EXTRA.num
+                else -> ExerciseBody.EXTRA.num
+            }
+            var other = exerciseMemomodifyText.text.toString()
+            var userId2 = arguments?.getString("userId")
+
+
+            var newMemo = MemoClass(1, userId, dateTime, exerciseTime, exerciseBody.toString().toInt(), other)
+
+            MemoDAO.deleteMemo(mainActivity, userId2!!)
+            MemoDAO.insertMemo(mainActivity, newMemo)
+
+
+        }
 
     }
 
@@ -84,7 +123,7 @@ class MemoModifyFragment : Fragment() {
             }
 
         }
-        //getData()
+        getData()
         mainActivity.removeFragment(FragmentName.MEMO_MODIFY_FRAGMENT)
     }
 }

@@ -142,6 +142,12 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
+    fun reloadRecyclerView(){
+        if (newFragment is ShowMemoFragment){
+            (newFragment as ShowMemoFragment).reloadRecyclerView()
+        }
+    }
+
 
 }
 
