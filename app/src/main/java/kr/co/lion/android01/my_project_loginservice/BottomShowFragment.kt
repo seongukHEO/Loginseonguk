@@ -14,6 +14,7 @@ class BottomShowFragment : BottomSheetDialogFragment() {
     lateinit var fragmentBottomShowBinding: FragmentBottomShowBinding
     lateinit var mainActivity: MainActivity
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -28,6 +29,8 @@ class BottomShowFragment : BottomSheetDialogFragment() {
     fun showData(){
         fragmentBottomShowBinding.apply {
             var userId = arguments?.getString("userId")
+
+
             if (userId != null){
                 var str = MemoDAO.selectOneMemo(mainActivity, userId)
 
