@@ -76,6 +76,9 @@ class ShowFragment : Fragment() {
                 }
 
             }
+            settingButton.setOnClickListener {
+                mainActivity.replaceFragment(FragmentName.SETTING_FRAGMENT, true,false,null)
+            }
 
         }
     }

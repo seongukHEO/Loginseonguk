@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="나의 정보">
+
+        <EditTextPreference
+            android:defaultValue="안녕하세요"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="문자열 입력"
+            app:dialogIcon="@drawable/add_24px"
+            app:dialogTitle="문자열 입력"
+            app:dialogMessage="문자열 입력 요소 입니다"
+            app:icon="@drawable/add_24px"
+            app:summary="문자열 입력 요소입니다"
+            app:key="data1"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:title="자동 로그인"
+            app:icon="@drawable/done_24px"
+            app:key="data2"
+            app:summary="자동로그인을 설정하시겠습니까?"
+            app:summaryOff="자동로그인을 해제합니다"
+            app:summaryOn="자동로그인을 실행합니다"/>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:title="밝기 모드 설정"
+            android:key="data3"
+            app:icon="@drawable/edit_24px"
+            app:summary="밝기 모드 설정입니다!"
+            app:summaryOn="다크모드를 설정합니다"
+            app:summaryOff="다트모드를 해제합니다"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -74,6 +74,9 @@ class MainActivity : AppCompatActivity() {
             FragmentName.MEMO_MODIFY_FRAGMENT -> {
                 newFragment = MemoModifyFragment()
             }
+            FragmentName.SETTING_FRAGMENT -> {
+                newFragment = SettingFragment()
+            }
 
         }
 
@@ -162,7 +165,8 @@ enum class FragmentName(var str:String){
     SEARCH_ID_FRAGMENT("SearchIdFragment"),
     SEARCH_PW_FRAGMENT("SearchPwFragment"),
     BOTTOM_SHOW_FRAGMENT("BottomShowFragment"),
-    MEMO_MODIFY_FRAGMENT("MemoModifyFragment")
+    MEMO_MODIFY_FRAGMENT("MemoModifyFragment"),
+    SETTING_FRAGMENT("SettingFragment")
 }
 
 
