@@ -60,8 +60,8 @@ class RecordMemoFragment : Fragment() {
                 R.id.radioButton -> ExerciseBody.CHEST.num
                 R.id.radioButton2 -> ExerciseBody.BACK.num
                 R.id.radioButton3 -> ExerciseBody.SHOULDER.num
-                R.id.radioButton4 -> ExerciseBody.ARMS.num
-                R.id.radioButton5 -> ExerciseBody.LEGS.num
+                R.id.radioButton4 -> ExerciseBody.LEGS.num
+                R.id.radioButton5 -> ExerciseBody.ARMS.num
                 R.id.radioButton6 -> ExerciseBody.EXTRA.num
                 else -> ExerciseBody.EXTRA
             }

@@ -47,10 +47,10 @@ class MemoModifyFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun printData(){
         fragmentMemoModifyBinding.apply {
-            var userId = arguments?.getString("userId")
+            var idx = arguments?.getInt("idx")
 
-            if (userId != null){
-                var str = MemoDAO.selectOneMemo(mainActivity, userId)
+            if (idx != null){
+                var str = MemoDAO.selectOneMemo(mainActivity, idx)
                 idModifyText.setText("${str?.userId}")
                 noDatemodifyText.setText("${str?.dateTime}")
                 timeRecordmodifyText.setText("${str?.exerciseTime}")
@@ -98,7 +98,7 @@ class MemoModifyFragment : Fragment() {
                 else -> ExerciseBody.EXTRA.num
             }
             var other = exerciseMemomodifyText.text.toString()
-            var userId2 = arguments?.getString("userId")
+            var userId2 = arguments?.getInt("idx")
 
 
             var newMemo = MemoClass(1, userId, dateTime, exerciseTime, exerciseBody.toString().toInt(), other)

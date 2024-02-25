@@ -28,11 +28,11 @@ class BottomShowFragment : BottomSheetDialogFragment() {
     //내용을 보여준다
     fun showData(){
         fragmentBottomShowBinding.apply {
-            var userId = arguments?.getString("userId")
+            var idx = arguments?.getInt("idx")
 
 
-            if (userId != null){
-                var str = MemoDAO.selectOneMemo(mainActivity, userId)
+            if (idx != null){
+                var str = MemoDAO.selectOneMemo(mainActivity, idx)
 
                 bottomUserId.text = "아이디 : ${str?.userId}"
                 bottomDateText.text = "날짜 : ${str?.dateTime}"
@@ -55,20 +55,22 @@ class BottomShowFragment : BottomSheetDialogFragment() {
     fun setEvent(){
         fragmentBottomShowBinding.apply {
             bottomModifyButton.setOnClickListener {
-                var userId = arguments?.getString("userId")
-                var bundle = Bundle()
-                bundle.putString("userId", userId)
+                var idx = arguments?.getInt("idx")
+                if (idx != null){
+                    var bundle = Bundle()
+                    bundle.putInt("idx", idx)
 
 
-                mainActivity.replaceFragment(FragmentName.MEMO_MODIFY_FRAGMENT, true, true, bundle)
-                dismiss()
+                    mainActivity.replaceFragment(FragmentName.MEMO_MODIFY_FRAGMENT, true, true, bundle)
+                    dismiss()
+                }
 
             }
             bottomDeleteButton.setOnClickListener {
                 enum.showDiaLog(mainActivity, "메모 삭제", "정말 삭제하시겠습니까?"){ dialogInterface: DialogInterface, i: Int ->
-                    var userId = arguments?.getString("userId")
-                    if (userId != null){
-                        MemoDAO.deleteMemo(mainActivity, userId)
+                    var idx = arguments?.getInt("idx")
+                    if (idx != null){
+                        MemoDAO.deleteMemo(mainActivity, idx)
                         //Recyclerview갱신
                         mainActivity.reloadRecyclerView()
                         dismiss()

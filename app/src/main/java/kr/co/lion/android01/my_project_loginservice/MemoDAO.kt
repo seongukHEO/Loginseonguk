@@ -6,15 +6,15 @@ class MemoDAO {
     companion object{
 
         //selectOne
-        fun selectOneMemo(context: Context, userId:String) : MemoClass? {
+        fun selectOneMemo(context: Context, idx:Int) : MemoClass? {
             //쿼리 생성
             var sql = """select *
                 |from MemoTable
-                |where userId = ?
+                |where idx = ?
             """.trimMargin()
 
             //?에 들어갈 값
-            var args = arrayOf(userId)
+            var args = arrayOf(idx.toString())
 
             //쿼리 실행
             var dbHelper = DBHelper(context)
@@ -127,13 +127,13 @@ class MemoDAO {
 
 
         //delete
-        fun deleteMemo(context: Context, userId: String){
+        fun deleteMemo(context: Context, idx: Int){
             var sql = """delete from MemoTable
-                |where userId = ?
+                |where idx = ?
             """.trimMargin()
 
             //?에 들어갈 값
-            var args = arrayOf(userId)
+            var args = arrayOf(idx.toString())
 
             //쿼리 실행
             var dbHelper = DBHelper(context)

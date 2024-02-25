@@ -160,7 +160,7 @@ class ShowMemoFragment : Fragment() {
 
                 //position 번째 추출
                 var bundle = Bundle()
-                bundle.putString("userId", memoList2[position].userId)
+                bundle.putInt("idx", memoList2[position].idx)
                 bottomShowFragment.arguments = bundle
 
                 //보여주기
